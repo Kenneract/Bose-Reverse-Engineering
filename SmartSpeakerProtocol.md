@@ -3,13 +3,13 @@
 TODO: Bump all the serial values in here to a full byte (eg. `F` should be `0F`) for consistency.
 
 ## Introduction
-The SmartSpeaker protocol is a proprietary protocol which defines a series of commands for controlling an audio device. It appears to be the protocol used for communication between the Console unit and the Bass Module in my theater setup. Normally it is used by the Console to command the Bass Module to change volume, switch input source, power down, etc.. Each command (request) should be met with a response from the opposing device. This document outlines my efforts to reverse-engineer this protocol.
+The SmartSpeaker protocol is a proprietary protocol which defines a series of commands for controlling an audio device. It appears to be the protocol used for communication between the Console unit and the Bass Module in my theatre setup. Normally it is used by the Console to command the Bass Module to change volume, switch input source, power down, etc.. Each command (request) should be met with a response from the opposing device. This document outlines my efforts to reverse-engineer this protocol.
 
 ## Hardware
-According to the troubleshooting guide `[0, p20]`, the SmartSpeaker implementation is over a single-wire serial connection; it runs at 4800 baud, is half-duplex & bi-drectional. The guide also suggests it uses positive logic with 0V-3.3/5V levels, but my unit seems to use exclusively 0V/5V. A troubleshooting guide for another model `[2, p13]` suggested the data format could be UART; 1 start bit, 8 data bits, no parity bits, and 1 stop bit (8N1), though suggests 3.3V logic levels. Probing with an oscilloscope found the 8N1 UART configuration to be accurate (albeit at 5V).
+According to the troubleshooting guide `[0, p20]`, the SmartSpeaker implementation is over a single-wire serial connection; it runs at 4800 baud, is half-duplex & bi-directional. The guide also suggests it uses positive logic with 0V-3.3/5V levels, but my unit seems to use exclusively 0V/5V. A troubleshooting guide for another model `[2, p13]` suggested the data format could be UART; 1 start bit, 8 data bits, no parity bits, and 1 stop bit (8N1), though suggests 3.3V logic levels. Probing with an oscilloscope found the 8N1 UART configuration to be accurate (albeit at 5V).
 
 ## Probing
-By soldering some wires onto the Bass Module's connector, I was able to see the data exchange between the Console and Bass Module using an oscilloscope. Even while the Console is "off", commands are still being sent to the Bass Module repeateldy. It seems that it is the same command being sent ~25 times per second; below is an analysis of one of these exchanges.
+By soldering some wires onto the Bass Module's connector, I was able to see the data exchange between the Console and Bass Module using an oscilloscope. Even while the Console is "off", commands are still being sent to the Bass Module repeatedly. It seems that it is the same command being sent ~25 times per second; below is an analysis of one of these exchanges.
 
 <center><img src="graphics/firstScope.png" width=600rem></center>
 
@@ -109,11 +109,8 @@ Source: AM to FM | D 0 B 6 (0), <br>2 0 78 7A (0), <br>2 0 5A 58 (0) |
 
 ---
 
-
 ## Experimentation with custom serial commands
-- If the `B 0 0 B` command isnt constantly being sent, the Bass Module will enter a deep sleep mode when "shut down", and will fail to respond to the first few commands it receives until it has woken up again. I think that command is constantly sent to make sure the Bass Module stays "awake" (even when shut down) so it can react to the power-on command. In my testing, the Bass Module ignores the first ~4 commands it receives if it has entered the deep sleep mode. I am not sure why this command still gets sent when the Bass Module is powered on, as it doesn't go into any type of deep-sleep in this mode - once it is turned on, the Bass Module responds to the first command I send, even without the B00B constantly being sent. **Rewrite this section; lotta words for little info**
-
-
+- If the Bass Module is powered down, the absence of the repeated `0B 00 00 0B` command results in it entering a deep-sleep mode, and will fail to respond to the first few commands it receives until it has woken up again. I believe that `0B 00 00 0B` is some kind of keep-alive command, to make sure the Bass Module is always "prepared" to handle another incoming command (even when "shut down"). In my testing, the Bass Module ignores the first ~4 commands it receives if it has entered the deep-sleep mode. I am not sure why this command still gets send once the Bass Module is powered-on as it doesn't seem to go into any type of deep-sleep - it responds to the first command I send, even without the `0B 00 00 0B` constantly being sent.
 
 ## Deciphered SmartSpeaker Commands
 ---
@@ -131,7 +128,7 @@ Function | Command | Response | Note
 --- | --- | --- | ---
 KeepAlive(?) | 0x0B 0x00 0x00 0x0B | 0x00 0x0C 0x00 0x00 0x0C (bass module on), <br>0x00 0x0C 0x00 0xF0 0xFC (bass module off) | Idle / keepalive command? Bass module still appears to remain awake if this command is not repeatedly sent.
 Mute Volume | 0x02 0x00 0x78 0x7A | 0x00 (OK) |
-Set Volume ("Attenuation") | 0x02 0x00 nn qq | 0x00 (OK) | Set volume (also unmutes), where `nn` = (`100-vol`) (range from `0x00` (100%) to `0x64` (0%)) and `qq` = (`nn XOR 0x02`) (I've seen it this referred to as "counts", where x counts is 100-x percent)
+Set Volume ("Attenuation") | 0x02 0x00 nn qq | 0x00 (OK) | Set volume (also un-mutes), where `nn` = (`100-vol`) (range from `0x00` (100%) to `0x64` (0%)) and `qq` = (`nn XOR 0x02`) (I've seen it this referred to as "counts", where x counts is 100-x percent)
 Set Treble Compensation | 0x04 0x00 nn qq | 0x00 (OK) | Level range is `-14` to `+14`. `nn` = (`48+lvl`) for level `0` to `+14` (range from `0x30` (0) to `0x3E` (+14)), or `nn` = (`31-lvl`) for `-1` to `-14` (range from `0x20` (-1) to `0x2D` (-14)). `qq` = (`nn XOR 0x04`)
 Set Bass Compensation | 0x04 0x00 nn qq | 0x00 (OK) | Level range is `-14` to `+14`. `nn` = (`80+lvl`) for level `0` to `+14` (range from `0x50` (0) to `0x5E` (+14)), or `nn` = (`63-lvl`) for `-1` to `-14` (range from `0x40` (-1) to `0x4D` (-14)). `qq` = (`nn XOR 0x04`)
 Power Down | 0x01 0x00 0x80 0x81 | 0x00 (OK) | Volume should be muted before this is run. I think this puts the Bass Module into a form of sleep akin to shutdown (as it doesn't have a real "shutdown" mode.)

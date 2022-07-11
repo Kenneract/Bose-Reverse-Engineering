@@ -1,6 +1,6 @@
 # Troubleshooting, Investigation, & Thought-Process
 
-A detailed, cronological recount of my troubleshooting/investigation steps and thoughts at the time.
+A detailed, chronological recount of my troubleshooting/investigation steps and thoughts at the time.
 
 ## Summary
 - Pulling the middle 3.3V pin in DE9 connector on Bass Module LOW significantly loads the SmartSpeaker data line voltage, destroying the signal.
@@ -27,7 +27,7 @@ See the [README.md](README.md) document for the initial symptoms that I noted.
 
 	Pin # | Module Sleeping, No Console | Module Awake, No Console
 	--- | --- | ---
-	1 | 29.0V | 28.V
+	1 | 29.0V | 28.1V
 	2 | GND | GND
 	3 | 0.78V (diode?) | 0.91V
 	4 | 1.19V | 1.15V
@@ -44,19 +44,19 @@ See the [README.md](README.md) document for the initial symptoms that I noted.
 08. Learned that Pin13 (SmartSpeaker) is required to turn the Bass Module on, and that all the amp/control circuits are actually in there.
 09. Learned (and verified via sticking pins into socket) that raw analog signals can be sent through the 13-pin connector to be played by the Bass Module.
 	- Required turning the Bass Module using the Console ("tricking it on") and then disconnecting the 13-pin cable.
-10. Assuming Console is unrepairable, decided to design basic replacement Console using an Arduino and supporting components.
+10. Assuming Console is un-repairable, decided to design basic replacement Console using an Arduino and supporting components.
 	- Our usage only involves external analog audio sources, so the Console was simply acting as a mixer and serial interface.
 	- Planned to "snoop" serial data and mimic the SmartSpeaker protocol with an Arduino, then just feed raw analog audio to the Bass Module.
 11. Soldered wires onto pin2 (GND) and pin13 (SmartSpeaker) on Bass Module PCB, reconnected to Console & Satellite Speakers, and began viewing serial data on oscilloscope.
 	- Noted the Vpp of signal was 1.78V, whereas it should have been 3.3V or 5.0V.
-	- Noted that the voltage OCCASIONALLY/RANDOMLY would pop back up to 5V, and that the problems (random shutdowns, etc.) only occured when the voltage was in 1.78V levels.
+	- Noted that the voltage OCCASIONALLY/RANDOMLY would pop back up to 5V, and that the problems (random shutdowns, etc.) only occurred when the voltage was in 1.78V levels.
 12. Realized that unplugging the 9-pin DE9 Satellite Speaker connector from the Bass Module restored the serial voltage to 5V.
 13. Checked voltage on pin13 on Bass Module when unplugged from Console and found ~0.5V avg when DE9 connector is in place, but ~3.3V avg when unplugged.
 	- Conclusion: The problem appears to be located in the Bass Module, and that the Console is probably fine.
 14. Tested voltages on DE9 connector on Bass Module, noted 3.3V potential on middle pin (again, see Pinouts.md).
 15. Tested pinout on Satellite Speaker cable and learned that the middle pin with 3.3V is connected to SHIELD (which gets grounded on the Bass Module)
 16. Suspect that the pin is either erroneously high (and connecting the cable shorts it to GND through shield, thus collapsing the Bass Module's 3.3V supply and causing the problem *ALTHOUGH there is supposed to be a circuit that triggers a reset [0, pg22] if voltage drops below 3.08V, so maybe PSU is still okay*), OR maybe it's intentional and used as a sense line that, when pulled low by the cable, indicates the Satellite Speakers are present and some other circuitry (amp?) may activate.
-17. Successfully connected an external speaker into Bass Module's DE9 connector without connecting center 3.3V pin to GND and got playback.
+17. Successfully connected an external speaker into Bass Module's DE9 connector without connecting centre 3.3V pin to GND and got playback.
 	- Connecting the pin to GND does not change volume at all (but problems immediately return)
 18. Theorize that something is wrong on the Bass Module board to cause 3.3V to appear on that pin. It may supposed to be an ANALOG_GND pin and some chip is fried and pulling it high?
 19. If desperate later, I plan to cut the trace on the PCB leading to that (3.3V) pin on the DE9, as it doesn't seem to be required for basic analog audio playback.
@@ -87,7 +87,7 @@ See the [README.md](README.md) document for the initial symptoms that I noted.
 33. Soldered more breakout wires onto the 13-pin connected (V_UNREG, GND, left+, left-, right+, right-, SmartSpeaker, Mute) and carried to an external JR45 connector.
 34. Just as a test, reconnected the Console to the Bass Module and probed the Mute signal; it hovers around 1.8V no matter if the Console is on or off.
 	- It is either not implemented on this system (same as DSP_Shutdown, and software mute is used instead), or is an indication that there is more damage to circuitry.
-	- For my replacement unit, I'm just going to ignore it as it seems to function fine while floating *(I still broke the wire out just in case, though)*.
+	- For my replacement unit, I'm just going to ignore it as it seems to function fine while floating *(I still broke-out the wire to the external RJ45 jack just in case, though)*.
 
 ---
 

@@ -8,6 +8,6 @@ It appears that the Console uses a 5V, UART, half-duplex data line, but the baud
 
 [1, pg69] also suggests the protocol takes the form of ASCII characters.
 
-Some sources say the Console enters ETAP automatically, otheres say ETAP commands must be sent within the first 10 seconds of power-on to start it.
+Some sources say the Console enters ETAP automatically, others say ETAP commands must be sent within the first 10 seconds of power-on to start it.
 
 I did not pursue the ETAP protocol for long as my focus shifted to finding the core required SmartSpeaker commands to get a functioning Arduino prototype.
