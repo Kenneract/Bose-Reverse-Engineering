@@ -121,7 +121,7 @@ Source: AM to FM | D 0 B 6 (0), <br>2 0 78 7A (0), <br>2 0 5A 58 (0) |
 - It seems that the first byte is somewhat like a "category", eg. all commands that start with 0x02 are related to volume.
 - It also seems that the 2nd byte is very commonly `0x00`.
 - It seems very common that, in 4-byte commands, the final byte is the `XOR` of the 3rd and 1st byte. Eg. 02 0 78 ??, ?? = 78 XOR 02 = 7A. I can only assume this is some form of redundancy for verification?
-- The only 5-byte command I've ever seen was `E 0 0 0 E`, which seems like some type of reset command as its the only command (ive seen) that starts with `0x0E`, and has no data but zeros.
+- The only 5-byte command I've ever seen was `E 0 0 0 E`, which seems like some type of special delimiter command as its the only command (ive seen) that starts with `0x0E`, and has no data but zeros. Perhaps it modifies the interpretation of the data following it.
 
 Below is a collection of SmartSpeaker commands which I have deciphered using a combination of the above data and some small hints in manuals (SOURCE NUMBER HERE)
 
@@ -129,10 +129,13 @@ I can see vague patterns in some of the bulk-commands sent during certain action
 
 Function | Command | Response | Note
 --- | --- | --- | ---
-? | 0x0B 0x00 0x00 0x0B | 0x00 0x0C 0x00 0x00 0x0C (bass module on), <br>0x00 0x0C 0x00 0xF0 0xFC (bass module off) | Idle / keepalive command? Bass module still appears to remain awake if this command is not repeatedly sent.
+KeepAlive(?) | 0x0B 0x00 0x00 0x0B | 0x00 0x0C 0x00 0x00 0x0C (bass module on), <br>0x00 0x0C 0x00 0xF0 0xFC (bass module off) | Idle / keepalive command? Bass module still appears to remain awake if this command is not repeatedly sent.
 Mute Volume | 0x02 0x00 0x78 0x7A | 0x00 (OK) |
-Set Volume | 0x02 0x00 nn qq | 0x00 (OK) | Set volume (also unmutes), where `nn` = (`100-vol`) (range from `0x00` (100%) to `0x64` (0%)) and `qq` = (`nn XOR 0x02`) (I've seen it this referred to as "counts", where x counts is 100-x percent)
+Set Volume ("Attenuation") | 0x02 0x00 nn qq | 0x00 (OK) | Set volume (also unmutes), where `nn` = (`100-vol`) (range from `0x00` (100%) to `0x64` (0%)) and `qq` = (`nn XOR 0x02`) (I've seen it this referred to as "counts", where x counts is 100-x percent)
 Set Treble Compensation | 0x04 0x00 nn qq | 0x00 (OK) | Level range is `-14` to `+14`. `nn` = (`48+lvl`) for level `0` to `+14` (range from `0x30` (0) to `0x3E` (+14)), or `nn` = (`31-lvl`) for `-1` to `-14` (range from `0x20` (-1) to `0x2D` (-14)). `qq` = (`nn XOR 0x04`)
 Set Bass Compensation | 0x04 0x00 nn qq | 0x00 (OK) | Level range is `-14` to `+14`. `nn` = (`80+lvl`) for level `0` to `+14` (range from `0x50` (0) to `0x5E` (+14)), or `nn` = (`63-lvl`) for `-1` to `-14` (range from `0x40` (-1) to `0x4D` (-14)). `qq` = (`nn XOR 0x04`)
 Power Down | 0x01 0x00 0x80 0x81 | 0x00 (OK) | Volume should be muted before this is run. I think this puts the Bass Module into a form of sleep akin to shutdown (as it doesn't have a real "shutdown" mode.)
-? | 0x0D 0x00 0x03 0x0E | ?? | Switches to S/PDIF source (according to a manual)
+? | 0x0D 0x00 0x03 0x0E | 0x00 (OK) | SOURCE TYPE ("selects S/PDIF input") according to [1, pg63].
+? | 0x0D 0x00 0x02 0x0F | 0x00 (OK) | SOURCE TYPE ("selects analog inputs") according to [1, pg62].
+? | 0x0E 0x00 0x00 0x00 0x0E | 0x00 (OK) | STREAM METEDATA ("sets stream type") according to [1, pg62].
+? | 0x01 0x00 0x00 0x01 | 0x00 (OK) | Wake system (1st send), remain muted (2nd send). See [1, pg62].
