@@ -55,6 +55,6 @@ After trying these steps and still having issues, I concluded this was a real ha
 
 ---
 
-Tags to help any other poor souls trying to do something similar in the future find this: bose, acoustimass, smartspeaker, rs232, serial, protocol, standard, cinemate, 321GS III, pinout, DB9, DE9, etap, tap, uart, specification, half-duplex, infrared, remote, boselink, din
+Tags to help any other poor souls trying to do something similar in the future find this: bose, acoustimass, smartspeaker, rs232, serial, protocol, standard, cinemate, 321GS III, pinout, DB9, DE9, etap, tap, uart, specification, half-duplex, infrared, remote, boselink, din, driver, satellite
 
 Bose is trademarked and such, no infringement intended.

@@ -6,8 +6,9 @@ A collection of pinouts and electrical descriptions for connectors.
 
 ---
 
-## 13-pin Acoustimass Connector
+## 13-pin Acoustimass Connector (cable: pins)
 <img src="graphics/acoustimass.png" width=300rem>
+<img src="graphics/acoustimassRef.png" width=300rem>
 
 Source: [0, pg20] [1, pg70]
 
@@ -32,41 +33,44 @@ Shell | SGND | Connected to GND
 
 ---
 
-## 9-pin DE9 Satellite Speaker Connector
+## 9-pin DE9 Satellite Speaker Connector (cable: pins)
 <img src="graphics/de9.png" width=300rem>
+<img src="graphics/de9Ref.png" width=300rem>
 
-Source: (pending)
+Source: Manual pinout of the cable
 
 Pin# | Description | Note
 --- | --- | ---
-1 | LeftA | 
-2 | LeftA |
+1 | Left Channel, R- | Right driver
+2 | Left Channel, R+ | Right driver
 3 | GND |
-4 | RightA | 
-5 | RightA | 
-6 | LeftB | 
-7 | LeftB | 
-8 | RightB | 
-9 | RightB | 
+4 | Right Channel, L+ | Left driver
+5 | Right Channel, L- | Left driver 
+6 | Left Channel, L+ | Left driver
+7 | Left Channel, L- | Left driver
+8 | Right Channel, R- | Right driver
+9 | Right Channel, R+ | Right driver
 Shell | GND | 
 
 ---
 
-## 4-pin Satellite Connector
+## 4-pin Satellite Connector (speaker: pins)
 <img src="graphics/satellite.png" width=300rem>
+<img src="graphics/satelliteRef.png" width=300rem>
 
-Source: (pending)
+Source: Manual pinout of the satellite speakers
 
 Pin# | Description | Note
 --- | --- | ---
-1 | SpkA | 
-2 | SpkA |
-3 | SpkB |
-4 | SpkB | 
+1 | Right Driver + | red terminal, black wire 
+2 | Right Driver - | blue terminal, white wire
+3 | Left Driver - | blue terminal, white wire
+4 | Left Driver + | red terminal, black wire
 
 
-## 9-pin DIN ETAP/Boselink Connector
+## 9-pin DIN ETAP/Boselink Connector (cable: pins)
 <img src="graphics/etap.png" width=300rem>
+<img src="graphics/etapRef.png" width=300rem>
 
 Source: [1, pg69]
 
@@ -74,11 +78,11 @@ Pin# | Description | Note
 --- | --- | ---
 1 | ? | 
 2 | ? |
-3 | Left + #1 | 
-4 | Right + #1 | 
-5 | Right + #2 | 
+3 | Zone 2 Left Input | 
+4 | Zone 2 Right Input | 
+5 | Zone 1 Right Input | 
 6 | ? | 
-7 | Data | Serial data
+7 | Data | Half-duplex serial data
 8 | ? | 
-9 | Left + #2 | 
+9 | Zone 1 Left Input | 
 Shell | GND | 
