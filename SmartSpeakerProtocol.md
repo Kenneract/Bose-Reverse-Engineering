@@ -118,11 +118,14 @@ Source: AM to FM | D 0 B 6 (0), <br>2 0 78 7A (0), <br>2 0 5A 58 (0) |
 - It seems that the first byte is somewhat like a "category", eg. all commands that start with 0x02 are related to volume.
 - It also seems that the 2nd byte is very commonly `0x00`.
 - It seems very common that, in 4-byte commands, the final byte is the `XOR` of the 3rd and 1st byte. Eg. 02 0 78 ??, ?? = 78 XOR 02 = 7A. I can only assume this is some form of redundancy for verification?
-- The only 5-byte command I've ever seen was `E 0 0 0 E`, which seems like some type of special delimiter command as its the only command (ive seen) that starts with `0x0E`, and has no data but zeros. Perhaps it modifies the interpretation of the data following it.
+- The only 5-byte command I've ever seen was `E 0 0 0 E`, which seems like some type of special delimiter command as its the only command (I've seen) that starts with `0x0E`, and has no data but zeros. Perhaps it modifies the interpretation of the data following it.
 
-Below is a collection of SmartSpeaker commands which I have deciphered using a combination of the above data and some small hints in manuals (SOURCE NUMBER HERE)
+I can see vague patterns in some of the bulk-commands sent during certain actions, but the specific function of several commands still evade me. I may also be missing something simple because of tunnel vision from working on this for so long; perhaps a revisit in the future will reveal something. In the future I would like to test the result of sending individual unknown commands and noting the reaction.
 
-I can see vague patterns in some of the bulk-commands sent during certain actions, but the specific function of several commands still evade me. I may also be missing something simple because of tunnel vision from working on this for so long; perhaps a revisit in the future will reveal something.
+---
+
+Below is a collection of SmartSpeaker commands which I have deciphered using a combination of the above snooping data and some small hints in manuals.
+
 
 Function | Command | Response | Note
 --- | --- | --- | ---
