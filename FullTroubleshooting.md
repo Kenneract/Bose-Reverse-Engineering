@@ -50,8 +50,8 @@ See the [README.md](README.md) document for the initial symptoms that I noted.
 11. Soldered wires onto pin2 (GND) and pin13 (SmartSpeaker) on Bass Module PCB, reconnected to Console & Satellite Speakers, and began viewing serial data on oscilloscope.
 	- Noted the Vpp of signal was 1.78V, whereas it should have been 3.3V or 5.0V.
 	- Noted that the voltage OCCASIONALLY/RANDOMLY would pop back up to 5V, and that the problems (random shutdowns, etc.) only occurred when the voltage was in 1.78V levels.
-12. Realized that unplugging the 9-pin DE9 Satellite Speaker connector from the Bass Module restored the serial voltage to 5V.
-13. Checked voltage on pin13 on Bass Module when unplugged from Console and found ~0.5V avg when DE9 connector is in place, but ~3.3V avg when unplugged.
+12. Realized that unplugging the 9-pin DE9 Satellite Speaker connector from the Bass Module restored the serial voltage to 5Vpp.
+13. Checked voltage on pin13 on Bass Module when unplugged from Console and found ~0.5V avg when DE9 connector is in place, but ~3.3V avg when unplugged (measured with DMM; Vpp > Vavg).
 	- Conclusion: The problem appears to be located in the Bass Module, and that the Console is probably fine.
 14. Tested voltages on DE9 connector on Bass Module, noted 3.3V potential on middle pin (again, see Pinouts.md).
 15. Tested pinout on Satellite Speaker cable and learned that the middle pin with 3.3V is connected to SHIELD (which gets grounded on the Bass Module)
