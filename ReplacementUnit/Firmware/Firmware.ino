@@ -1,6 +1,6 @@
 /* Author: Kennan (Kenneract)
  * Created: Jun.30.2022
- * Modified: Jul.5.2022
+ * Modified: Jul.14.2022
  * Hardware: Bose Console Recreation (Arduino Nano)
  * Purpose: Quick and rough firmware for the custom Bose console recreation.
  *          Reads IR remote and button commands, sends serial data to Bass Module,
@@ -36,8 +36,8 @@ const byte DISPLAY_PINS[] = {6, 7, 8, 12, 11, 9, 10}; //7-seg pins (A,B,C,D,E,F,
 
 // Config
 const bool FAKE_SERIAL = false; //If should pretend all outgoing serial data is successful to prevent program lag while Bass Module is disconnected. FOR DEBUGGING ONLY
-const byte RGB_BRIGHTNESS = 32; //RGB LED brightness (0-255)
-const byte IND_BRIGHTNESS = 16; //Indicator LED brightness (0-255)
+const byte RGB_BRIGHTNESS = 10; //RGB LED brightness (0-255)
+const byte IND_BRIGHTNESS = 24; //Indicator LED brightness (0-255)
 const unsigned int LOADING_ANIM_DELAY = 80; //Time (ms) between segment switches in the 7seg loading animation
 //  Green indicator settings
 const unsigned int IND_FLASH_TIME = 75; //time (ms) to flash the green indicator LED for
@@ -72,7 +72,7 @@ const unsigned int IR_MIN_GAP = 200; //Time (ms) required between IR button pres
 //  console state
 bool busy = false; //If unit is busy (and thus not ready for any inputs)
 //  speaker state (THESE ARE DEFAULT SETTINGS)
-int curVol = 10; //Current volume setting
+int curVol = 20; //Current volume setting
 int curBass = 14; //Current bass compensation setting
 int curTreb = 6; //Current treble compensation setting
 bool subAwake = false; //If the bass module is online
