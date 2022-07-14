@@ -84,7 +84,9 @@ See the [README.md](README.md) document for the initial symptoms that I noted.
 31. Opened up the Bass Module again and removed the I/O board (easy to access).
 32. Cut the trace leading to the middle (3.3V) DE9 pin.
 	- It leads to the same internal pin-header that the SmartSpeaker line goes to, so it seems to be intentional to have 3.3V there).
+	- The control/DSP board which all these connections run to is significantly harder to access, and would be somewhat destructive, hence why I did not investigate further.
 33. Soldered more breakout wires onto the 13-pin connected (V_UNREG, GND, left+, left-, right+, right-, SmartSpeaker, Mute) and carried to an external JR45 connector.
+	- This is for the custom replacement console; see [ReplacementUnit](ReplacementUnit/README.md).
 34. Just as a test, reconnected the Console to the Bass Module and probed the Mute signal; it hovers around 1.8V no matter if the Console is on or off.
 	- It is either not implemented on this system (same as DSP_Shutdown, and software mute is used instead), or is an indication that there is more damage to circuitry.
 	- For my replacement unit, I'm just going to ignore it as it seems to function fine while floating *(I still broke-out the wire to the external RJ45 jack just in case, though)*.

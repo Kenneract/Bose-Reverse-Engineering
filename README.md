@@ -1,10 +1,10 @@
 # Bose-Reverse-Engineering
 
-This repository contains a recount of my process of troubleshooting, investigating, and reverse-engineering parts of my Bose 321GS Series III home entertainment system after it stopped working. I began this project on Jun.20.2022.
+This repository contains a recount of my process of troubleshooting, investigating, and reverse-engineering parts of my Bose 321GS Series III home entertainment system after it stopped working. I began this project on Jun.20.2022. All graphics in this repository are my own original work. You can use anything from this repo as you please, but credit would be appreciated.
 
 *When making specific references to some source documents (see sources.md), I'll put a square bracket with [src#, pg#] near it.*
 
-The goal of this investigation was to get a functioning audio system again. I was willing to repair the existing system, but if the issue proved to be too complex for my abilities, I was prepared to do some hardware hacking to make my own solution.
+The goal of this investigation was to get a functioning audio system again. I was willing to repair the existing system, but if the issue proved to be impractical to fix in a reasonable timeframe, I was prepared to do some hardward hacking to make my own solution.
 
 Disclaimer: Despite my efforts, there are still a lot of missing bits and questions left unanswered. I stopped my investigation once I was able to get a functioning system again. If you have any more info feel free to reach out.
 

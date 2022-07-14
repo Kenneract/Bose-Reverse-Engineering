@@ -80,7 +80,7 @@ I initially had some trouble locating certain components, but after some comprom
 
 <img src="graphics/hardwareAssembled.png" width=500rem>
 
-Physical construction is currently my weakest area. In the interest of finishing the project in a timely manner, I decided to mount all the components onto a wooden board (in a semi-pleasing way) and call it a day. Below is the finished replacement console. *(The USB cable is just for the demo; it is not required for the unit to run.)*
+Physical construction is currently my weakest area. In the interest of finishing the project in a timely manner, I decided to mount all the components onto a wooden board (in a semi-pleasing way) and call it a day. I made sure that all components could be easily removed in case a future repair or upgrade. Below is the finished replacement console. *(The USB cable is just for the demo; it is not required for the unit to run.)*
 
 <img src="graphics/hardwareFinal.png" width=500rem>
 
