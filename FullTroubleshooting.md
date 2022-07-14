@@ -43,7 +43,7 @@ See the [README.md](README.md) document for the initial symptoms that I noted.
 	</details>
 08. Learned that Pin13 (SmartSpeaker) is required to turn the Bass Module on, and that all the amp/control circuits are actually in there.
 09. Learned (and verified via sticking pins into socket) that raw analog signals can be sent through the 13-pin connector to be played by the Bass Module.
-	- Required turning the Bass Module using the Console ("tricking it on") and then disconnecting the 13-pin cable.
+	- Required turning the Bass Module on using the Console ("tricking it on") and then disconnecting the 13-pin cable.
 10. Assuming Console is un-repairable, decided to design basic replacement Console using an Arduino and supporting components.
 	- Our usage only involves external analog audio sources, so the Console was simply acting as a mixer and serial interface.
 	- Planned to "snoop" serial data and mimic the SmartSpeaker protocol with an Arduino, then just feed raw analog audio to the Bass Module.
