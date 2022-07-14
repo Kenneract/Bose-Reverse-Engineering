@@ -4,7 +4,7 @@ This repository contains a recount of my process of troubleshooting, investigati
 
 *When making specific references to some source documents (see sources.md), I'll put a square bracket with [src#, pg#] near it.*
 
-The goal of this investigation was to get a functioning audio system again. I was willing to repair the existing system, but if the issue proved to be impractical to fix in a reasonable timeframe, I was prepared to do some hardward hacking to make my own solution.
+The goal of this investigation was to get a functioning audio system again. I was willing to repair the existing system, but if the issue proved to be impractical to fix in a reasonable timeframe, I was prepared to do some hardward hacking to make my own solution (see [Replacement Unit](ReplacementUnit/README.md)).
 
 Disclaimer: Despite my efforts, there are still a lot of missing bits and questions left unanswered. I stopped my investigation once I was able to get a functioning system again. If you have any more info feel free to reach out.
 
@@ -16,7 +16,7 @@ Disclaimer: Despite my efforts, there are still a lot of missing bits and questi
 4. [SmartSpeaker Protocol](SmartSpeakerProtocol.md)
 5. [Infrared Remote Codes](RemoteIRCodes.md)
 6. [ETAP Protocol](ETAPProtocol.md)
-7. [Replacement Unit](ReplacementUnit)
+7. [Replacement Unit](ReplacementUnit/README.md)
 8. [Sources](Sources.md)
 
 ---
